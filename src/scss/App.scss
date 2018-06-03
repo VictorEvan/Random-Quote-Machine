@@ -1,0 +1,299 @@
+@import "normalize";
+
+html{
+  background-color: black;
+}
+
+// =======================
+// Variables
+// =======================
+
+// Font Familes
+
+$font-family--primary  : 'Raleway', Helvetica, Arial, sans-serif;
+
+// Font Sizes
+
+$base__font-size : 16px;
+$base__line      : 24px;
+
+// Font Weights
+
+$font-weight--thin       : 100;
+$font-weight--light      : 300;
+$font-weight--medium     : 400;
+$font-weight--bold       : 700;
+$font-weight--ultra-bold : 900;
+
+// Breakpoints
+
+$brkpoint-sm    : 320px;
+$brkpoint-md    : 768px;
+$brkpoint-lg    : 1100px;
+
+// Lists to be used with loops
+
+$desktop-backgrounds: (    
+  "https://dl.dropboxusercontent.com/s/01lsjrbh0mu0oqj/optimized-bridge.jpg",
+  "https://dl.dropboxusercontent.com/s/fyfzhortwgdwaiy/optimized-foggy-landscape.jpg",
+  "https://dl.dropboxusercontent.com/s/xml5prepu95v7vr/optimized-hazy-mountain-view.jpg",
+  "https://dl.dropboxusercontent.com/s/46qgzv55uyl6554/optimized-man-on-mountain.jpg",
+  "https://dl.dropboxusercontent.com/s/pjpzjxuus4vt8fq/optimized-beach.jpg"
+);
+
+$mobile-backgrounds: (
+  "https://dl.dropboxusercontent.com/s/4iiaoe8zwpknayj/mobile-bridge.jpg",
+  "https://dl.dropboxusercontent.com/s/5dchclt6b66ju8a/mobile-foggy-landscape.jpg",
+  "https://dl.dropboxusercontent.com/s/vke8xefp7485geq/mobile-hazy-mountain-view.jpg",
+  "https://dl.dropboxusercontent.com/s/amua1emfkvcb2h9/mobile-man-on-mountain.jpg",
+  "https://dl.dropboxusercontent.com/s/tqt7aj5ihbmy2i7/mobile-beach.jpg"
+);
+
+$author-colors: (
+  rgba(82,121,204,0.50),
+  rgba(92,111,153,0.50),
+  rgba(78,227,255,0.50),
+  rgba(255,177,141,0.50),
+  rgba(204,78,53,0.50)
+);
+
+// =======================
+// Extends
+// =======================
+
+%center-text {
+  text-align: center;
+}
+
+// =======================
+// Mixins
+// =======================
+
+@mixin mq($break) {
+  @if $break == "small" {
+    @media (min-width: $brkpoint-sm) and (max-width: $brkpoint-md) {
+      @content;
+    }
+  }
+  @else if $break == "medium" {
+    @media (min-width: $brkpoint-md + 1) {
+      @content;
+    }
+  }
+  @else if $break == "large" {
+    @media (min-width: $brkpoint-lg) {
+      @content;
+    }
+  }
+  @else {
+   	@error "Whoops! No value could be retrieved for `#{$break}`. "
+  }
+};
+
+// =======================
+// Functions
+// =======================
+
+// get em values
+@function em($target, $context: $base__font-size) {
+	@return ($target / $context) * 1em;
+}
+
+// ========================
+// Regular Tags
+// ========================
+
+* {
+  box-sizing: border-box;
+  font-family: $font-family--primary ;
+  color: #FdFdFd;
+}
+
+p {
+  margin: 0 0;
+}
+
+button {
+  border: 2px solid #fff;
+  border-radius: 5px;
+  color: #fff;
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  cursor: pointer;
+  padding: 0.5em 0.75em;
+  display: inline-block;
+  margin: em(10px) em(20px);
+  letter-spacing: 1px;
+  font-weight: 700;
+  outline: none;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  @include mq("small") {
+    padding: em(5px) em(15px);
+    margin: em(5px) em(5px);
+  }
+}
+
+button:hover {
+  color: black;
+  background: #fff;
+}
+// ========================
+// Ids
+// ========================
+
+// ========================
+// Classes
+// ========================
+
+.base {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background .5s .5s;
+  @include mq("small") {
+    background: url(nth($mobile-backgrounds,5));
+    background-size: cover;
+  }
+  @include mq("medium") {
+    background: url(nth($desktop-backgrounds,5));
+    background-size: cover;
+  }
+  color: white;
+}
+
+.background-image {
+  @include mq("small") {
+    @for $i from 1 through length($desktop-backgrounds) {
+      &-#{$i} {
+        $url: nth($mobile-backgrounds, $i);
+        background: url($url);
+        background-size: cover;
+      }
+    }
+  }
+  @include mq("medium") {
+    @for $i from 1 through length($desktop-backgrounds) {
+      &-#{$i} {
+        $url: nth($desktop-backgrounds, $i);
+        background: url($url);
+        background-size: cover;
+      }
+    }
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: $brkpoint-sm;
+  @extend %center-text;
+  .quote {
+    font-weight: $font-weight--bold;
+  }
+  .author {
+    background-color: rgba(204,78,53,0.50);
+    padding: em(5px) em(4px);
+    margin: em(20px) 0;
+  }
+  @include mq("small") {
+    padding: 0 em(30px);
+    .quote {
+      font-size: em($base__font-size * 2);
+    }
+    .author {
+      font-size: em($base__font-size);
+    }
+  }
+  @include mq("medium") {
+    max-width: 75%;
+    .quote {
+      font-size: em($base__font-size * 2.25);
+    }
+    .author {
+      font-size: em($base__font-size * 1.2);
+    }
+  }
+  @include mq("large") {
+    max-width: 80%;
+    .quote {
+      font-size: em($base__font-size * 3);
+    }
+    .author {
+      font-size: em($base__font-size * 1.2);
+    }
+  }
+}
+
+.container {
+  @for $i from 1 through length($author-colors) {
+    .author-color-#{$i} {
+      $color: nth($author-colors, $i);
+      background-color: $color;
+    }
+  }
+}
+
+.resp-sharing-button__link,
+.resp-sharing-button__icon {
+  display: inline-block;
+}
+
+.resp-sharing-button__link {
+  text-decoration: none;
+  color: #fff;
+  margin: 0.5em;
+}
+
+.resp-sharing-button {
+  border: 2px solid #fff;
+  border-radius: 5px;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  padding: 0.5em 0.75em;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.resp-sharing-button__icon svg {
+  width: 1em;
+  height: 1em;
+  margin-right: 0.4em;
+  vertical-align: top
+}
+
+.resp-sharing-button--small svg {
+  margin: 0;
+  vertical-align: middle
+}
+
+/* Solid icons get a fill */
+.resp-sharing-button__icon--solid {
+  fill: #fff;
+  stroke: none
+}
+
+.resp-sharing-button--twitter {
+  background-color: none;
+}
+.resp-sharing-button--twitter {
+  background-color: none;
+  border-color: none;
+}
+
+.resp-sharing-button--twitter:hover,
+.resp-sharing-button--twitter:active {
+  background-color: white;
+}
+
+.resp-sharing-button--twitter:hover
+.resp-sharing-button__icon--solid {
+  fill: #000;
+  stroke: none;
+}
