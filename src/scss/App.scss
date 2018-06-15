@@ -1,4 +1,4 @@
-@import "normalize";
+@import 'normalize';
 
 html{
   background-color: black;
@@ -132,7 +132,6 @@ button {
   -moz-transition: all 0.3s;
   transition: all 0.3s;
   @include mq("small") {
-    padding: em(5px) em(15px);
     margin: em(5px) em(5px);
   }
 }

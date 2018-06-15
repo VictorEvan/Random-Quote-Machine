@@ -331,7 +331,6 @@ button {
   transition: all 0.3s; }
   @media (min-width: 320px) and (max-width: 768px) {
     button {
-      padding: 0.3125em 0.9375em;
       margin: 0.3125em 0.3125em; } }
 
 button:hover {

@@ -43,8 +43,8 @@ class App extends Component {
       }
     })
     .then( response => response.json() )
-    .catch( error => console.error('Error:', error) )
-    .then( response => this.updateContent(response));
+    .then( response => this.updateContent(response))
+    .catch( error => console.error('Error:', error) );
   }
 
   updateContent = data => {
