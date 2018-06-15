@@ -22,6 +22,7 @@ class App extends Component {
   defaultQuote= "When we treat man as he is, we make him worse than he is; when we treat him as if he already were what he potentially could be, we make him what he should be.";
   defaultAuthor= "Johann Wolfgang von Goethe";
   defaultTwitterQuery = `https://twitter.com/intent/tweet/?text=%22${this.queryStringify(this.defaultQuote)}%22%20-%20${this.queryStringify(this.defaultAuthor)}`;
+  currentQuoteIndex = null;
 
   state = {
     quote: this.defaultQuote,
@@ -33,18 +34,29 @@ class App extends Component {
   authorColor= "";
   background= "base";
 
-  getRandomQuote = () => {
-    return fetch("https://andruxnet-random-famous-quotes.p.mashape.com/cat=",{
+  componentDidMount = () => {
+    this.getQuotes();
+  }
+
+  getQuotes = () => {
+    return fetch("https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json",{
       method: "get",
       headers: {
-        "X-Mashape-Key": "OivH71yd3tmshl9YKzFH7BTzBVRQp1RaKLajsnafgL2aPsfP9V",
         "Accept": "application/json",
-        "Content-Type": "application/x-www-form-urlencoded"
       }
     })
     .then( response => response.json() )
-    .then( response => this.updateContent(response))
+    .then( response => this.quotes = response.quotes )
     .catch( error => console.error('Error:', error) );
+  }
+
+  setNextQuote = () => {
+    if (this.currentQuoteIndex === (this.quotes.length - 1)) {
+      this.currentQuoteIndex = 0;
+    } else {
+      this.currentQuoteIndex++;
+    }
+    this.updateContent(this.quotes[this.currentQuoteIndex]);
   }
 
   updateContent = data => {
@@ -70,7 +82,7 @@ class App extends Component {
           </div>
           <div className="button-wrap">
               <TwitterButton hrefValue={this.state.twitterQuery} />
-              <button onClick={this.getRandomQuote} className="new-quote">new quote</button>
+              <button onClick={this.setNextQuote} className="new-quote">new quote</button>
           </div>
         </main>
       </div>
