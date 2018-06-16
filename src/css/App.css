@@ -297,6 +297,14 @@ template {
 [hidden] {
   display: none; }
 
+body:before {
+  content: url("https://dl.dropboxusercontent.com/s/01lsjrbh0mu0oqj/optimized-bridge.jpg") url("https://dl.dropboxusercontent.com/s/fyfzhortwgdwaiy/optimized-foggy-landscape.jpg") url("https://dl.dropboxusercontent.com/s/xml5prepu95v7vr/optimized-hazy-mountain-view.jpg") url("https://dl.dropboxusercontent.com/s/46qgzv55uyl6554/optimized-man-on-mountain.jpg") url("https://dl.dropboxusercontent.com/s/pjpzjxuus4vt8fq/optimized-beach.jpg") url("https://dl.dropboxusercontent.com/s/4iiaoe8zwpknayj/mobile-bridge.jpg") url("https://dl.dropboxusercontent.com/s/5dchclt6b66ju8a/mobile-foggy-landscape.jpg") url("https://dl.dropboxusercontent.com/s/vke8xefp7485geq/mobile-hazy-mountain-view.jpg") url("https://dl.dropboxusercontent.com/s/amua1emfkvcb2h9/mobile-man-on-mountain.jpg") url("https://dl.dropboxusercontent.com/s/tqt7aj5ihbmy2i7/mobile-beach.jpg");
+  /* partial fallback */
+  background-image: url("https://dl.dropboxusercontent.com/s/01lsjrbh0mu0oqj/optimized-bridge.jpg");
+  visibility: hidden;
+  position: absolute;
+  left: -999em; }
+
 html {
   background-color: black; }
 
